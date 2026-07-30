@@ -6,20 +6,37 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Protocol treba pristup fotografijama za sliku profila."
+        }
+      ]
+    ],
     "ios": {
       "supportsTablet": true
     },
     "android": {
+      "package": "com.protocol.app",
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/android-icon-foreground.png",
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
       },
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "878d7d82-cc50-410a-839a-d39ff5b73656"
+      }
     }
   }
 }
