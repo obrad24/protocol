@@ -19,6 +19,7 @@ Verzije prate smisao proizvoda; dok nema store release-a, koristimo `0.x.y`.
 ### Fixed
 
 - APK crash on launch: dodan gesture-handler import + `GestureHandlerRootView` (React Navigation)
+- APK crash on launch: pin `expo-font@~14.0.12` (lockfile je vukao SDK 57 peer uz Expo 54)
 
 ### Planned
 

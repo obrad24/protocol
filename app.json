@@ -12,7 +12,8 @@
         {
           "photosPermission": "Protocol treba pristup fotografijama za sliku profila."
         }
-      ]
+      ],
+      "expo-font"
     ],
     "ios": {
       "supportsTablet": true
