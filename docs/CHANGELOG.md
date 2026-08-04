@@ -15,11 +15,13 @@ Verzije prate smisao proizvoda; dok nema store release-a, koristimo `0.x.y`.
 - [docs/ANDROID_APK.md](./ANDROID_APK.md) — upute za login, build i instalaciju
 - [docs/PLAY_STORE.md](./PLAY_STORE.md) — task checklist za Google Play Store
 - `react-native-gesture-handler` (fix crash-a standalone APK pri startu)
+- Lokalni onboarding: unos imena pri prvom pokretanju (`completeOnboarding`, `OnboardingScreen`)
 
 ### Fixed
 
 - APK crash on launch: dodan gesture-handler import + `GestureHandlerRootView` (React Navigation)
 - APK crash on launch: pin `expo-font@~14.0.12` (lockfile je vukao SDK 57 peer uz Expo 54)
+- Uklonjen hardkodirani seed profil „Janko“ — profil se kreira tek nakon onboardinga
 
 ### Planned
 

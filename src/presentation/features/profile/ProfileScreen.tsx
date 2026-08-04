@@ -36,6 +36,7 @@ export function ProfileScreen() {
     setLoading(true);
     try {
       const data = await getProfile();
+      if (!data) return;
       setProfile(data);
       setName(data.displayName);
     } finally {

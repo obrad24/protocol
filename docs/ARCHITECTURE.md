@@ -85,6 +85,7 @@ Protocol/
 │   │   │   ├── create-plan/
 │   │   │   ├── plans/
 │   │   │   ├── achievements/
+│   │   │   ├── onboarding/
 │   │   │   └── profile/
 │   │   ├── navigation/
 │   │   └── theme/
@@ -111,6 +112,7 @@ Protocol/
 | Data (AsyncStorage repos + DI) | ✅ |
 | Application use cases | ✅ |
 | Profile / Create Plan / Plans / Home / Achievements UI | ✅ MVP |
+| Onboarding (lokalno ime) | ✅ pri prvom pokretanju |
 | Stats UI | ✅ Sedmica/Mjesec + chart + habits |
 | v1 taskovi (Faza 0–10) | ✅ Gotovo |
 

@@ -50,7 +50,7 @@ Pravila:
 - [x] 3.3 Implementirati `PlanRepository` (+ taskovi vezani za plan)
 - [x] 3.4 Implementirati `CompletionRepository`
 - [x] 3.5 Implementirati `AchievementRepository`
-- [x] 3.6 Seed / default profil (npr. ime „Janko“) za prvo pokretanje
+- [x] 3.6 Seed / default profil uklonjen — ime se unosi na onboardingu (bez „Janko“)
 - [x] 3.7 Composition root / DI: povezati repository implementacije sa use case-ovima
 
 ---
@@ -149,6 +149,7 @@ Pravila:
 
 ## Faza 11 — Buduće (van v1, ne počinjati dok v1 nije gotov)
 
+- [x] 11.0 Lokalni onboarding — unos imena pri prvom pokretanju (bez naloga)
 - [ ] 11.1 Javni planovi — pretraga i pregled
 - [ ] 11.2 Autentifikacija i sync
 - [ ] 11.3 Push podsetnici

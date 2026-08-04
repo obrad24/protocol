@@ -6,7 +6,7 @@ export type UserProfile = {
   updatedAt: string; // ISO-8601
 };
 
-export function createDefaultProfile(displayName = 'Janko'): UserProfile {
+export function createDefaultProfile(displayName: string): UserProfile {
   const now = new Date().toISOString();
   return {
     id: 'profile-local',

@@ -4,7 +4,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { StyleSheet } from 'react-native';
 
-import { RootNavigator } from './src/presentation/navigation/RootNavigator';
+import { AppBootstrap } from './src/presentation/navigation/AppBootstrap';
 import { AppProviders } from './src/presentation/providers/AppProviders';
 
 export default function App() {
@@ -14,7 +14,7 @@ export default function App() {
         <AppProviders>
           <NavigationContainer>
             <StatusBar style="dark" />
-            <RootNavigator />
+            <AppBootstrap />
           </NavigationContainer>
         </AppProviders>
       </SafeAreaProvider>

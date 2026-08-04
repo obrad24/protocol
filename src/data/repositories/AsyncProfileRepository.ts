@@ -1,17 +1,13 @@
-import { createDefaultProfile, type UserProfile } from '../../domain/entities/UserProfile';
+import type { UserProfile } from '../../domain/entities/UserProfile';
 import type { ProfileRepository } from '../../domain/repositories/ProfileRepository';
 import { STORAGE_KEYS } from '../storage/keys';
 import type { KeyValueStore } from '../storage/KeyValueStore';
 
 export function createAsyncProfileRepository(store: KeyValueStore): ProfileRepository {
   return {
-    async get(): Promise<UserProfile> {
+    async get(): Promise<UserProfile | null> {
       const raw = await store.getItem(STORAGE_KEYS.profile);
-      if (!raw) {
-        const profile = createDefaultProfile('Janko');
-        await store.setItem(STORAGE_KEYS.profile, JSON.stringify(profile));
-        return profile;
-      }
+      if (!raw) return null;
       return JSON.parse(raw) as UserProfile;
     },
 

@@ -7,6 +7,7 @@ import {
 import { createCreatePlan, createSetActivePlan } from '../../application/plans/createPlan';
 import { createListPlans } from '../../application/plans/listPlans';
 import {
+  createCompleteOnboarding,
   createGetProfile,
   createUpdateProfile,
 } from '../../application/profile/profileUseCases';
@@ -41,6 +42,7 @@ export function createAppContainer(store: KeyValueStore = asyncStorageStore) {
     },
     useCases: {
       getProfile: createGetProfile(profileRepo),
+      completeOnboarding: createCompleteOnboarding(profileRepo),
       updateProfile: createUpdateProfile(profileRepo),
       createPlan: createCreatePlan(planRepo),
       listPlans: createListPlans(planRepo, completionRepo),

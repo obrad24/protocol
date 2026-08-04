@@ -50,6 +50,9 @@ export function createGetHomeDashboard(
     date = todayDateOnly(),
   ): Promise<HomeDashboard> {
     const profile = await profileRepo.get();
+    if (!profile) {
+      throw new Error('Profil nije pronađen. Završi onboarding.');
+    }
     const activePlan = await planRepo.getActive();
 
     if (!activePlan) {

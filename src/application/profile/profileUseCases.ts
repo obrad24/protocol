@@ -1,4 +1,7 @@
-import type { UserProfile } from '../../domain/entities/UserProfile';
+import {
+  createDefaultProfile,
+  type UserProfile,
+} from '../../domain/entities/UserProfile';
 import type { ProfileRepository } from '../../domain/repositories/ProfileRepository';
 
 export class ProfileValidationError extends Error {
@@ -9,8 +12,26 @@ export class ProfileValidationError extends Error {
 }
 
 export function createGetProfile(profileRepo: ProfileRepository) {
-  return async function getProfile(): Promise<UserProfile> {
+  return async function getProfile(): Promise<UserProfile | null> {
     return profileRepo.get();
+  };
+}
+
+export function createCompleteOnboarding(profileRepo: ProfileRepository) {
+  return async function completeOnboarding(displayName: string): Promise<UserProfile> {
+    const trimmed = displayName.trim();
+    if (!trimmed) {
+      throw new ProfileValidationError('Ime ne može biti prazno.');
+    }
+
+    const existing = await profileRepo.get();
+    if (existing) {
+      return existing;
+    }
+
+    const profile = createDefaultProfile(trimmed);
+    await profileRepo.save(profile);
+    return profile;
   };
 }
 
@@ -22,6 +43,9 @@ export type UpdateProfileInput = {
 export function createUpdateProfile(profileRepo: ProfileRepository) {
   return async function updateProfile(input: UpdateProfileInput): Promise<UserProfile> {
     const current = await profileRepo.get();
+    if (!current) {
+      throw new ProfileValidationError('Profil nije pronađen. Završi onboarding.');
+    }
 
     if (input.displayName !== undefined && !input.displayName.trim()) {
       throw new ProfileValidationError('Ime ne može biti prazno.');
