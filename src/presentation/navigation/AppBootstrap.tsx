@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
-import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, AppState, StyleSheet, View } from 'react-native';
+import * as Notifications from 'expo-notifications';
 
 import { OnboardingScreen } from '../features/onboarding/OnboardingScreen';
 import { useUseCases } from '../providers/AppProviders';
@@ -7,7 +8,7 @@ import { colors } from '../theme';
 import { RootNavigator } from './RootNavigator';
 
 export function AppBootstrap() {
-  const { getProfile } = useUseCases();
+  const { getProfile, syncDailyReminders } = useUseCases();
   const [checking, setChecking] = useState(true);
   const [needsOnboarding, setNeedsOnboarding] = useState(false);
 
@@ -18,6 +19,9 @@ export function AppBootstrap() {
         const profile = await getProfile();
         if (!cancelled) {
           setNeedsOnboarding(profile === null);
+          if (profile) {
+            void syncDailyReminders();
+          }
         }
       } finally {
         if (!cancelled) {
@@ -28,11 +32,28 @@ export function AppBootstrap() {
     return () => {
       cancelled = true;
     };
-  }, [getProfile]);
+  }, [getProfile, syncDailyReminders]);
+
+  // Refresh reminder bodies when app returns or a reminder fires (keeps content current).
+  useEffect(() => {
+    const appSub = AppState.addEventListener('change', (state) => {
+      if (state === 'active') {
+        void syncDailyReminders();
+      }
+    });
+    const receivedSub = Notifications.addNotificationReceivedListener(() => {
+      void syncDailyReminders();
+    });
+    return () => {
+      appSub.remove();
+      receivedSub.remove();
+    };
+  }, [syncDailyReminders]);
 
   const onOnboardingCompleted = useCallback(() => {
     setNeedsOnboarding(false);
-  }, []);
+    void syncDailyReminders();
+  }, [syncDailyReminders]);
 
   if (checking) {
     return (

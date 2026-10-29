@@ -5,14 +5,19 @@ import {
 } from '@react-navigation/bottom-tabs';
 import type { ComponentProps } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { CreatePlanScreen } from '../features/create-plan/CreatePlanScreen';
 import { HomeScreen } from '../features/home/HomeScreen';
 import { PlansScreen } from '../features/plans/PlansScreen';
 import { ProfileScreen } from '../features/profile/ProfileScreen';
 import { StatsScreen } from '../features/stats/StatsScreen';
-import { colors, radii, shadows } from '../theme';
+import { useI18nTheme } from '../i18n/I18nThemeProvider';
+import { radii, shadows } from '../theme';
 import type { RootTabParamList } from './types';
+
+/** Visual tab bar height excluding the system bottom inset. */
+const TAB_BAR_CONTENT_HEIGHT = 64;
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
 
@@ -28,7 +33,11 @@ const TAB_ICONS: Record<
   Profile: { active: 'person', inactive: 'person-outline' },
 };
 
-function CreateTabButton({ onPress, accessibilityState }: BottomTabBarButtonProps) {
+function CreateTabButton({
+  onPress,
+  accessibilityState,
+  color,
+}: BottomTabBarButtonProps & { color: string }) {
   const focused = accessibilityState?.selected;
 
   return (
@@ -38,7 +47,13 @@ function CreateTabButton({ onPress, accessibilityState }: BottomTabBarButtonProp
       accessibilityState={accessibilityState}
       style={styles.createButtonWrap}
     >
-      <View style={[styles.createButton, focused && styles.createButtonFocused]}>
+      <View
+        style={[
+          styles.createButton,
+          { backgroundColor: color },
+          focused && styles.createButtonFocused,
+        ]}
+      >
         <Ionicons name="add" size={32} color="#FFFFFF" />
       </View>
     </Pressable>
@@ -46,6 +61,11 @@ function CreateTabButton({ onPress, accessibilityState }: BottomTabBarButtonProp
 }
 
 export function RootTabs() {
+  const { colors, t } = useI18nTheme();
+  const insets = useSafeAreaInsets();
+  // Keep existing inner spacing (8) and add the device bottom inset on top.
+  const tabBarBottomPad = 8 + insets.bottom;
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -55,8 +75,8 @@ export function RootTabs() {
         tabBarStyle: {
           backgroundColor: colors.surface,
           borderTopColor: colors.border,
-          height: 64,
-          paddingBottom: 8,
+          height: TAB_BAR_CONTENT_HEIGHT + insets.bottom,
+          paddingBottom: tabBarBottomPad,
           paddingTop: 8,
         },
         tabBarIcon: ({ color, size, focused }) => {
@@ -69,19 +89,19 @@ export function RootTabs() {
         },
       })}
     >
-      <Tab.Screen name="Home" component={HomeScreen} options={{ title: 'Home' }} />
-      <Tab.Screen name="Plans" component={PlansScreen} options={{ title: 'Planovi' }} />
+      <Tab.Screen name="Home" component={HomeScreen} options={{ title: t('tabHome') }} />
+      <Tab.Screen name="Plans" component={PlansScreen} options={{ title: t('tabPlans') }} />
       <Tab.Screen
         name="CreatePlan"
         component={CreatePlanScreen}
         options={{
-          title: 'Kreiraj',
+          title: t('tabCreate'),
           tabBarLabel: () => null,
-          tabBarButton: (props) => <CreateTabButton {...props} />,
+          tabBarButton: (props) => <CreateTabButton {...props} color={colors.primary} />,
         }}
       />
-      <Tab.Screen name="Stats" component={StatsScreen} options={{ title: 'Stats' }} />
-      <Tab.Screen name="Profile" component={ProfileScreen} options={{ title: 'Profil' }} />
+      <Tab.Screen name="Stats" component={StatsScreen} options={{ title: t('tabStats') }} />
+      <Tab.Screen name="Profile" component={ProfileScreen} options={{ title: t('tabProfile') }} />
     </Tab.Navigator>
   );
 }
@@ -96,7 +116,6 @@ const styles = StyleSheet.create({
     width: 58,
     height: 58,
     borderRadius: radii.pill,
-    backgroundColor: colors.primary,
     justifyContent: 'center',
     alignItems: 'center',
     ...shadows.card,
@@ -104,6 +123,6 @@ const styles = StyleSheet.create({
     elevation: 6,
   },
   createButtonFocused: {
-    backgroundColor: '#5A4BD1',
+    opacity: 0.9,
   },
 });

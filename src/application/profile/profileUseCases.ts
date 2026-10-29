@@ -38,6 +38,8 @@ export function createCompleteOnboarding(profileRepo: ProfileRepository) {
 export type UpdateProfileInput = {
   displayName?: string;
   avatarUri?: string | null;
+  locale?: UserProfile['locale'];
+  themePreference?: UserProfile['themePreference'];
 };
 
 export function createUpdateProfile(profileRepo: ProfileRepository) {
@@ -56,6 +58,8 @@ export function createUpdateProfile(profileRepo: ProfileRepository) {
       displayName:
         input.displayName !== undefined ? input.displayName.trim() : current.displayName,
       avatarUri: input.avatarUri !== undefined ? input.avatarUri : current.avatarUri,
+      locale: input.locale ?? current.locale,
+      themePreference: input.themePreference ?? current.themePreference,
       updatedAt: new Date().toISOString(),
     };
     await profileRepo.save(next);

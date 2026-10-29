@@ -1,4 +1,4 @@
-import type { UserProfile } from '../../domain/entities/UserProfile';
+import { normalizeProfile, type UserProfile } from '../../domain/entities/UserProfile';
 import type { ProfileRepository } from '../../domain/repositories/ProfileRepository';
 import { STORAGE_KEYS } from '../storage/keys';
 import type { KeyValueStore } from '../storage/KeyValueStore';
@@ -8,11 +8,15 @@ export function createAsyncProfileRepository(store: KeyValueStore): ProfileRepos
     async get(): Promise<UserProfile | null> {
       const raw = await store.getItem(STORAGE_KEYS.profile);
       if (!raw) return null;
-      return JSON.parse(raw) as UserProfile;
+      const parsed = JSON.parse(raw) as Partial<UserProfile> & {
+        id: string;
+        displayName: string;
+      };
+      return normalizeProfile(parsed);
     },
 
     async save(profile: UserProfile): Promise<void> {
-      await store.setItem(STORAGE_KEYS.profile, JSON.stringify(profile));
+      await store.setItem(STORAGE_KEYS.profile, JSON.stringify(normalizeProfile(profile)));
     },
   };
 }

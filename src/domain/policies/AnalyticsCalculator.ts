@@ -29,7 +29,7 @@ export function buildDayBars(input: {
   from: string;
   to: string;
   planStartDate: string;
-  planEndDate: string;
+  planEndDate: string | null;
 }): DayBar[] {
   return eachDateInRange(input.from, input.to).map((date) => {
     const progress = calculateProgress({

@@ -49,4 +49,5 @@ Detaljni checkboxi: [TASKS.md](./TASKS.md).
 - Cloud backup / multi-device  
 - Podsetnici i kalendarski pregled  
 - Statistike i grafikoni  
-- Widgeti na početnom ekranu OS-a
+- Widgeti na početnom ekranu OS-a  
+- **Premium + dijeljeni planovi:** autor (Premium) kreira motivacione poruke na dijeljenom planu; followeri ih vide — vidi [TASKS.md](./TASKS.md) Faza 13 (ne raditi prije dijeljenja i pretplate)

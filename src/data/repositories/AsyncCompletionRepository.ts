@@ -48,5 +48,13 @@ export function createAsyncCompletionRepository(store: KeyValueStore): Completio
       const all = await readAll(store);
       return all.find((c) => c.taskId === taskId && c.date === date) ?? null;
     },
+
+    async deleteByPlan(planId: string): Promise<void> {
+      const all = await readAll(store);
+      await writeAll(
+        store,
+        all.filter((c) => c.planId !== planId),
+      );
+    },
   };
 }

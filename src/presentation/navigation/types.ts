@@ -7,6 +7,10 @@ export type RootTabParamList = {
 };
 
 export type RootStackParamList = {
-  Tabs: undefined;
+  Tabs: { screen?: keyof RootTabParamList } | undefined;
   Achievements: undefined;
+  EditPlan: { planId: string };
+  PlanOverview: { planId: string };
+  PlanStats: { planId: string };
+  Settings: undefined;
 };

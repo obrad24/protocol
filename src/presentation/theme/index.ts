@@ -1,19 +1,7 @@
-export const colors = {
-  background: '#F5F6FA',
-  surface: '#FFFFFF',
-  text: '#1A1A2E',
-  textMuted: '#8B8FA3',
-  primary: '#6C5CE7',
-  primaryMuted: '#EDE9FE',
-  success: '#22C55E',
-  streak: '#FB923C',
-  warning: '#F59E0B',
-  border: '#E8EAF0',
-  danger: '#EF4444',
-  tabInactive: '#9CA3AF',
-  locked: '#C4C8D4',
-  overlay: 'rgba(26, 26, 46, 0.4)',
-} as const;
+import { darkColors, lightColors, type ColorTokens } from './colors';
+
+/** @deprecated Prefer useI18nTheme().colors — kept for gradual migration. */
+export const colors = lightColors;
 
 export const spacing = {
   xs: 4,
@@ -67,7 +55,7 @@ export const shadows = {
 } as const;
 
 export const theme = {
-  colors,
+  colors: lightColors,
   spacing,
   typography,
   radii,
@@ -75,3 +63,5 @@ export const theme = {
 } as const;
 
 export type Theme = typeof theme;
+
+export { lightColors, darkColors, type ColorTokens };

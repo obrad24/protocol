@@ -115,6 +115,7 @@ Protocol/
 | Onboarding (lokalno ime) | ✅ pri prvom pokretanju |
 | Stats UI | ✅ Sedmica/Mjesec + chart + habits |
 | v1 taskovi (Faza 0–10) | ✅ Gotovo |
+| v2 plan lifecycle / overview / settings | ✅ Faza 12 |
 
 ---
 

@@ -9,4 +9,5 @@ export interface CompletionRepository {
   ): Promise<TaskCompletion[]>;
   upsert(completion: TaskCompletion): Promise<void>;
   find(taskId: string, date: string): Promise<TaskCompletion | null>;
+  deleteByPlan(planId: string): Promise<void>;
 }

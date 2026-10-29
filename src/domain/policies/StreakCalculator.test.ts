@@ -10,6 +10,7 @@ const dailyTask = (id: string): Task => ({
   planId: 'plan-1',
   title: 'Daily',
   recurrence: { type: 'daily' },
+  allowOverPlan: false,
   sortOrder: 0,
   createdAt: '2026-07-01T00:00:00.000Z',
 });

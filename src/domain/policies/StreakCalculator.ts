@@ -1,11 +1,11 @@
 import type { TaskCompletion } from '../entities/TaskCompletion';
 import type { Task } from '../entities/Task';
 import { addDays } from '../../shared/utils/date';
-import { calculateProgress } from './ProgressCalculator';
+import { isPerfectDay } from './PerfectStatus';
 
 /**
- * Streak = consecutive days ending at `date` where daily progress was 100%.
- * Days with zero due tasks do not break or extend the streak (skipped).
+ * Streak = consecutive Perfect Days ending at `date`.
+ * Days with no daily tasks do not break or extend the streak (skipped).
  */
 export function calculateStreak(input: {
   tasks: Task[];
@@ -20,21 +20,14 @@ export function calculateStreak(input: {
   let checked = 0;
 
   while (checked < lookbackDays && cursor >= planStartDate) {
-    const progress = calculateProgress({
-      tasks,
-      completions,
-      date: cursor,
-      planStartDate,
-      planEndDate: cursor,
-    });
-
-    if (progress.dailyTotal === 0) {
+    const hasDaily = tasks.some((t) => t.recurrence.type === 'daily');
+    if (!hasDaily) {
       cursor = addDays(cursor, -1);
       checked += 1;
       continue;
     }
 
-    if (progress.dailyPercent < 100) {
+    if (!isPerfectDay(tasks, completions, cursor)) {
       break;
     }
 

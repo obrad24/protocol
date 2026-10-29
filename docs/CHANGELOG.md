@@ -9,6 +9,20 @@ Verzije prate smisao proizvoda; dok nema store release-a, koristimo `0.x.y`.
 
 ### Added
 
+- **Daily reminders:** `expo-notifications` local push; Settings ON/OFF + 1–2 vremena; body iz trenutnog Perfect Day remaining (resync na open/toggle/settings); pozitivna poruka kad je 0 preostalih
+- **Home redesign:** hub sa velikim karticama aktivnih planova → detail sa taskovima/progressom scoped po odabranom planu; switcher za 2 aktivna plana; yesterday/Perfect Day vezani za isti plan
+- **Max 2 aktivna plana:** `MAX_ACTIVE_PLANS`; activate ne gasi ostale; limit poruka pri create/activate; deactivate na listi planova; istekli planovi ne broje se
+- **Statistics po planu:** lista planova → `PlanStats` za odabrani plan (postojeća kalkulacija, scoped po `planId`)
+- **Neograničeno trajanje plana:** `duration: 'unlimited'` sa `endDate: null`; bez date pickera; plan ne istječe / nema end overview; postojeći planovi nepromijenjeni
+- **Perfect Day / Week:** Perfect Day samo iz `daily` taskova; Perfect Week iz `weekly_count` targeta (bonus 4/3 OK) + postojeće daily week pravilo; monthly ne utiče; Home due-lista ne odlučuje perfect status; streak prati Perfect Day
+- **Custom end date picker:** `@react-native-community/datetimepicker` umjesto ručnog YYYY-MM-DD unosa (Android calendar dialog, iOS inline modal); `minimumDate` = početak plana; edit otvara postojeći datum
+- **Bottom tab safe area:** tab bar koristi `useSafeAreaInsets()` (visina + `paddingBottom`) za Android 3-button/gesture i iOS Home Indicator; ekrani i dalje samo `edges={['top']}` da nema duplog bottom paddinga
+- **Prekoračenje plana:** opcija „Dozvoli prekoračenje plana“ na zadatku; nakon ispunjenog targeta Home prikazuje sekciju „Plan ispunjen“ sa `done/target`, bonus labelom i „+ Dodaj još jedno“ (originalni target ostaje; bonus se čuva u progressu/count)
+- **v2 plan lifecycle:** trajanje (kraj sedmice/mjeseca, 1 mj, 3 mj, custom datum), brisanje i editovanje plana (edit resetuje napredak + upozorenje)
+- Opis zadatka (max 250), dugme „Dodaj zadatak“ ispod liste
+- Plan overview na isteku plana + period overview (sedmica/mjesec) + jučerašnji dan (pregled + toggle)
+- Kartice završenih planova u Dostignućima (success %); Perfect Day/Week/Month/Streak samo za aktivni plan
+- Settings: jezik (bs/en) i tema (light/dark/system) + i18n dictionary
 - EAS Build setup za Android APK (`eas.json` preview profil)
 - `android.package`: `com.protocol.app`
 - Skripta `npm run build:apk`
@@ -25,7 +39,8 @@ Verzije prate smisao proizvoda; dok nema store release-a, koristimo `0.x.y`.
 
 ### Planned
 
-- Faza 11+ (javni planovi, auth/sync, push) — van v1
+- Faza 11+ (javni planovi, auth/sync) — van v1
+- **Faza 13:** Premium motivacione poruke na dijeljenim planovima — tek nakon dijeljenja planova + Premium pretplate (samo dokumentovano u TASKS/ROADMAP; bez implementacije)
 
 ---
 

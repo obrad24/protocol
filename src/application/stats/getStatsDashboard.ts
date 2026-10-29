@@ -14,11 +14,13 @@ import { todayDateOnly } from '../../shared/utils/date';
 export type StatsPeriod = 'week' | 'month';
 
 export type StatsDashboard = {
+  planId: string;
+  planName: string;
   period: StatsPeriod;
   date: string;
   rangeStart: string;
   rangeEnd: string;
-  hasActivePlan: boolean;
+  hasPlan: boolean;
   overallPercent: number;
   completedCount: number;
   expectedCount: number;
@@ -34,19 +36,22 @@ export function createGetStatsDashboard(
   completionRepo: CompletionRepository,
 ) {
   return async function getStatsDashboard(
+    planId: string,
     period: StatsPeriod = 'week',
     date = todayDateOnly(),
   ): Promise<StatsDashboard> {
-    const activePlan = await planRepo.getActive();
+    const plan = await planRepo.getById(planId);
     const range = rangeForPeriod(period, date);
 
-    if (!activePlan) {
+    if (!plan) {
       return {
+        planId,
+        planName: '',
         period,
         date,
         rangeStart: range.start,
         rangeEnd: range.end,
-        hasActivePlan: false,
+        hasPlan: false,
         overallPercent: 0,
         completedCount: 0,
         expectedCount: 0,
@@ -58,20 +63,18 @@ export function createGetStatsDashboard(
       };
     }
 
-    const completions = await completionRepo.listByPlan(activePlan.id);
+    const completions = await completionRepo.listByPlan(plan.id);
     const dayBars = buildDayBars({
-      tasks: activePlan.tasks,
+      tasks: plan.tasks,
       completions,
       from: range.start,
       to: range.end > date ? date : range.end,
-      planStartDate: activePlan.startDate,
-      planEndDate: activePlan.endDate,
+      planStartDate: plan.startDate,
+      planEndDate: plan.endDate,
     });
 
     const completedCount = dayBars.reduce((sum, d) => sum + d.completed, 0);
     const expectedCount = dayBars.reduce((sum, d) => sum + d.total, 0);
-    const overallPercent =
-      expectedCount === 0 ? 0 : Math.round((completedCount / expectedCount) * 100);
 
     const daysWithTasks = dayBars.filter((d) => d.total > 0).length;
     const dailyAverage =
@@ -80,10 +83,10 @@ export function createGetStatsDashboard(
         : Math.round((completedCount / daysWithTasks) * 10) / 10;
 
     const streak = calculateStreak({
-      tasks: activePlan.tasks,
+      tasks: plan.tasks,
       completions,
       date,
-      planStartDate: activePlan.startDate,
+      planStartDate: plan.startDate,
     });
 
     let longest = 0;
@@ -98,28 +101,29 @@ export function createGetStatsDashboard(
       }
     }
 
-    // Also use period-end progress snapshot for weekly/monthly % consistency
     const progress = calculateProgress({
-      tasks: activePlan.tasks,
+      tasks: plan.tasks,
       completions,
       date: range.end > date ? date : range.end,
-      planStartDate: activePlan.startDate,
-      planEndDate: activePlan.endDate,
+      planStartDate: plan.startDate,
+      planEndDate: plan.endDate,
     });
 
     const habitStats = buildHabitStats({
-      tasks: activePlan.tasks,
+      tasks: plan.tasks,
       completions,
       from: range.start,
       to: range.end > date ? date : range.end,
     });
 
     return {
+      planId: plan.id,
+      planName: plan.name,
       period,
       date,
       rangeStart: range.start,
       rangeEnd: range.end,
-      hasActivePlan: true,
+      hasPlan: true,
       overallPercent: period === 'week' ? progress.weeklyPercent : progress.monthlyPercent,
       completedCount,
       expectedCount,

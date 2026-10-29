@@ -152,4 +152,51 @@ Pravila:
 - [x] 11.0 Lokalni onboarding — unos imena pri prvom pokretanju (bez naloga)
 - [ ] 11.1 Javni planovi — pretraga i pregled
 - [ ] 11.2 Autentifikacija i sync
-- [ ] 11.3 Push podsetnici
+- [x] 11.3 Local daily reminders (Settings) — urađeno u 12.19; remote/push sync ostaje kasnije
+
+---
+
+## Faza 12 — Plan lifecycle, overviewi, settings (v2)
+
+- [x] 12.1 Trajanje plana: kraj sedmice/mjeseca, 1 mj, 3 mj, custom datum
+- [x] 12.2 Brisanje plana (cascade completions)
+- [x] 12.3 Edit plana + restart napretka + upozorenje
+- [x] 12.4 Add-task CTA ispod liste zadataka
+- [x] 12.5 Opis zadatka (max 250)
+- [x] 12.6 Overview na kraju plana + motivacija
+- [x] 12.7 Overview kraja sedmice/mjeseca
+- [x] 12.8 Jučerašnji dan (pregled + toggle)
+- [x] 12.9 Kartice završenih planova u Achievements
+- [x] 12.10 Perfect/streak dostignuća samo za aktivni plan
+- [x] 12.11 Settings: jezik (bs/en) i tema (light/dark/system)
+- [x] 12.12 Prekoračenje plana (allowOverPlan) — bonus izvršenja iznad targeta + Home sekcija „Plan ispunjen“
+- [x] 12.13 Bottom tab safe area (Android 3-button/gesture + iOS Home Indicator)
+- [x] 12.14 Custom end date — calendar date picker (min = plan start)
+- [x] 12.15 Perfect Day (samo daily) / Perfect Week (weekly targeti); Home due-list ne odlučuje
+- [x] 12.16 Trajanje plana: Neograničeno (`endDate: null`)
+- [x] 12.17 Max 2 aktivna plana + Statistics po planu (bez Premium)
+- [x] 12.18 Home redesign — hub aktivnih planova + detail scoped po odabranom planu
+- [x] 12.19 Daily local notifications (1–2×/dan, Perfect Day remaining, Settings)
+
+---
+
+## Faza 13 — Dijeljenje planova, Premium, motivacione poruke (kasnije)
+
+> **Ne implementirati** dok nisu spremni: dijeljenje planova između korisnika **i** Premium / subscription sistem.
+
+### Preduslovi
+
+- [ ] 13.1 Dijeljenje planova (autor ↔ followeri / javni ili invite link)
+- [ ] 13.2 Premium pretplata (provjera statusa kroz postojeći subscription sloj)
+
+### Motivacione poruke autora (Premium + shared plan)
+
+- [ ] 13.3 Domain: motivaciona poruka vezana za dijeljeni plan (1+ poruka po planu)
+- [ ] 13.4 Samo **Premium** autor može kreirati/uređivati poruke na **dijeljenom** planu
+- [ ] 13.5 Korisnici koji koriste tuđi plan **vide** autorove poruke; free korisnici i dalje mogu koristiti dijeljene planove, ali **ne** kreiraju poruke
+- [ ] 13.6 Prikaz u odgovarajućim trenucima (npr. napredak / tokom dana) — pravila triggera dogovoriti uz 13.1–13.2
+
+Primjeri poruka (produkt, ne implementacija):
+
+- „Još samo jedan zadatak i završio si današnji cilj. 💪“
+- „Ne moraš biti savršen svaki dan — samo nastavi.“

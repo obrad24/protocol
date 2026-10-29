@@ -99,8 +99,29 @@ Korisnik kreira **planove** sa zadacima i pravilima ponavljanja, prati **dnevni 
 | FR-PROG-04 | **Streak** = broj uzastopnih dana sa **100% dnevnim progresom**. |
 | FR-PROG-05 | **Procenat završenosti plana** na kartici = ukupni napredak kroz trajanje plana (zadaci × ponavljanja u periodu). |
 | FR-PROG-06 | **Perfect Day / Week / Month** se dodjeljuju kada je progres za taj period 100%. |
+| FR-PROG-07 | Perfect Day/Week/Month i Streak se računaju **samo za aktivni plan**; historijske medalje ostaju. |
 
 > **Odluka (v1):** streak raste samo ako je **dnevni progres = 100%** za taj dan. Dani bez due zadataka ne prekidaju i ne produžavaju streak.
+
+### 2.9 Plan lifecycle (v2)
+
+| ID | Zahtjev |
+|----|---------|
+| FR-PLAN-10 | Trajanje: do kraja sedmice, do kraja mjeseca, 1 mjesec, 3 mjeseca, ili custom datum ≥ start. |
+| FR-PLAN-11 | Korisnik može **obrisati** plan (taskovi + completions); medalje ostaju. |
+| FR-PLAN-12 | Korisnik može **editovati** plan; prije save-a upozorenje; save briše completions i restartuje period od danas. |
+| FR-PLAN-13 | Zadatak može imati opcioni opis do 250 znakova. |
+| FR-PLAN-14 | Na isteku plana prikazuje se overview (%, urađeno/nedostaje, motivacija). |
+| FR-PLAN-15 | Na kraju sedmice/mjeseca prikazuje se period overview za aktivni plan. |
+| FR-PLAN-16 | Home prikazuje jučerašnji dan; dozvoljen toggle samo za juče i danas. |
+| FR-ACH-07 | Završeni planovi imaju summary karticu sa success % u Achievements. |
+
+### 2.10 Settings (v2)
+
+| ID | Zahtjev |
+|----|---------|
+| FR-SET-01 | Biranje jezika: bs / en. |
+| FR-SET-02 | Biranje teme: light / dark / system. |
 
 ---
 
